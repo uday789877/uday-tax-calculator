@@ -1,11 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tax calculator</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Tax Generator for Different Products</title>
+  <style>
+    /* Basic styling for the tax generator */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+    }
+  </style>
 </head>
 <body>
-    thsis is thdiid  thkjss
+  <h1>Tax Generator for Different Products</h1>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="productList">
+      <!-- Product rows will be dynamically added here -->
+    </tbody>
+  </table>
+
+  <button onclick="addProduct()">Add Product</button>
+  <button onclick="calculateTax()">Calculate Tax</button>
+
+  <p>Total Tax: <span id="totalTax"></span></p>
+
+  <script>
+    function addProduct() {
+      const productList = document.getElementById('productList');
+      const row = productList.insertRow();
+      row.innerHTML = `
+        <td><input type="text" placeholder="Product Name"></td>
+        <td><input type="number" placeholder="Price"></td>
+      `;
+    }
+
+    function calculateTax() {
+      const rows = document.getElementById('productList').getElementsByTagName('tr');
+      let totalTax = 0;
+
+      for (let i = 0; i < rows.length; i++) {
+        const price = parseFloat(rows[i].querySelector('input[type="number"]').value);
+        const tax = (price * 0.15).toFixed(2); // Assuming a tax rate of 15%
+
+        totalTax += isNaN(tax) ? 0 : parseFloat(tax);
+      }
+
+      document.getElementById('totalTax').innerText = `₹${totalTax}`;
+    }
+  </script>
+  <script src="/script.js"></script>
 </body>
 </html>
